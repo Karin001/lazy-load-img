@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        html,body{
+            margin:0;
+            padding:0;
+        }
+        h1{
+            text-align: center;
+        }
+        .scroll-con{
+            height: 500px;
+            overflow-y: auto;
+            overflow-x: hidden;
+   
+        }
+        .scroll-con-img{
+            width: 80%;
+            opacity: 0;
+            transform: translateX(50%);
+            transition: all 1s;
+        }
+        .fade{
+            transform: translateX(0);
+            opacity: 1;
+            transition: all 1s;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <h1>LAZY LOAD</h1>
+    <div class="scroll-con">
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt reprehenderit rem quia, ut deserunt tempora? Optio accusantium doloremque veritatis, nemo maiores velit quis! Modi illum doloremque voluptatum cumque animi amet laudantium vero, eaque, porro inventore quisquam! Magni inventore quo rem voluptatibus dicta possimus voluptatum ut error quam nam corporis, a nemo cumque dolore eveniet consequatur nobis maiores ipsam aspernatur! Ducimus, eveniet officia? Provident est at veniam sit, omnis aliquam deleniti voluptatem mollitia perspiciatis quo officiis maxime voluptate repudiandae quae asperiores corrupti! Nihil labore esse ipsa iure dolorem quo sed. Molestias accusamus libero, exercitationem aut rem ipsum officiis iure possimus. Eum?
+
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt reprehenderit rem quia, ut deserunt tempora? Optio accusantium doloremque veritatis, nemo maiores velit quis! Modi illum doloremque voluptatum cumque animi amet laudantium vero, eaque, porro inventore quisquam! Magni inventore quo rem voluptatibus dicta possimus voluptatum ut error quam nam corporis, a nemo cumque dolore eveniet consequatur nobis maiores ipsam aspernatur! Ducimus, eveniet officia? Provident est at veniam sit, omnis aliquam deleniti voluptatem mollitia perspiciatis quo officiis maxime voluptate repudiandae quae asperiores corrupti! Nihil labore esse ipsa iure dolorem quo sed. Molestias accusamus libero, exercitationem aut rem ipsum officiis iure possimus. Eum?
+
+        </p>
+        <p>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt reprehenderit rem quia, ut deserunt tempora? Optio accusantium doloremque veritatis, nemo maiores velit quis! Modi illum doloremque voluptatum cumque animi amet laudantium vero, eaque, porro inventore quisquam! Magni inventore quo rem voluptatibus dicta possimus voluptatum ut error quam nam corporis, a nemo cumque dolore eveniet consequatur nobis maiores ipsam aspernatur! Ducimus, eveniet officia? Provident est at veniam sit, omnis aliquam deleniti voluptatem mollitia perspiciatis quo officiis maxime voluptate repudiandae quae asperiores corrupti! Nihil labore esse ipsa iure dolorem quo sed. Molestias accusamus libero, exercitationem aut rem ipsum officiis iure possimus. Eum?
+
+        </p>
+        <img class="scroll-con-img" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550389742763&di=aaed1d6b16e1814cf379e110d6de89fa&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu.com%2Fimgad%2Fpic%2Fitem%2Fe4dde71190ef76c6f470e02a9716fdfaaf516714.jpg" alt="">
+        <img class="scroll-con-img" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550389742763&di=a364e80479bfed61db2c3671bf7b043d&imgtype=0&src=http%3A%2F%2Fphotocdn.sohu.com%2F20130725%2FImg382533437.jpg" alt="">
+        <img class="scroll-con-img" data-src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1550389742762&di=84247a8a344ba9de84ba5329666176dc&imgtype=0&src=http%3A%2F%2Fpic67.nipic.com%2Ffile%2F20150512%2F18138004_183531555000_2.jpg" alt="">
+    </div>
+</body>
+<script>
+    const con = document.querySelector('.scroll-con')
+    const imgs = document.querySelectorAll('.scroll-con-img')
+    // con.addEventListener('scroll',()=>{
+    //     imgs.forEach(img=>{
+    //         const imgTop = img.getBoundingClientRect().top
+    //         const conTop = con.getBoundingClientRect().top
+    //         if(imgTop-conTop <= con.clientHeight) {
+    //             const src = img.getAttribute('data-src')
+    //             img.setAttribute('src',src)
+    //             img.classList.add('fade')
+    //         }
+    //     })
+    // })
+    function lazyLoad(target){
+        const io = new IntersectionObserver((entries,observer)=>{
+            entries.forEach(entry => {
+                if(entry.isIntersecting){
+                    const img =  entry.target
+                    const src = img.getAttribute('data-src')
+                    img.setAttribute('src',src)
+                    img.classList.add('fade')
+                    observer.disconnect()
+                }
+            })
+        },{
+            root:con,
+            threshold:1,
+           rootMargin:'0px'
+        })
+        io.observe(target)
+    }
+    imgs.forEach(lazyLoad)
+</script>
+</html>
